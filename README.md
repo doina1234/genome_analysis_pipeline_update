@@ -1,7 +1,10 @@
-# Genome analysis pipeline update
+# Genome Analysis Pipeline Update
 By Sara Schütz
 
-This Snakemake pipeline is aimed to perform the assembly and annotation of paired-end sequencing reads, as well as to compare the genome content of the given DNA sequences. In addition, it performs a variant calling analysis in order to detect the SNPs across sequences, and it also determines the spa type. Given multiple paired-end sequencing reads (FASTQ files), it provides a table file showing the genome content comparison, and (multiple) tables showing the SNPs detected across strains. Outputs have the same format as given by software descirped below. The pipeline also provides the de novo assembly of the sequencing reads and their annotation.
+This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, annotation, variant calling (SNP detection), pangenome analysis, and typing (e.g., spa typing), along with antimicrobial resistance (AMR) and virulence gene screening.
+
+Given paired-end FASTQ files, the pipeline produces annotated assemblies, comparative genome content analysis, SNP reports across strains, and multiple visualizations including trees and heatmaps.
+
 
 ## Overview
 The Snakemake pipeline performs the following steps:
@@ -13,66 +16,96 @@ The Snakemake pipeline performs the following steps:
    - `multiqc`: Uses [MultiQC](https://multiqc.info/) to aggregate multiple FastQC reports into a single, comprehensive summary report.
 
 2. **Genome Assembly**
-   - `spades`: Runs [SPAdes](http://cab.spbu.ru/software/spades/) to assemble the processed reads into contiguous sequences (contigs).
+   - `spades`: Runs [SPAdes](http://cab.spbu.ru/software/spades/) to assemble the processed reads into contiguous sequences (contigs) (default).
+   - `unicycler`: if you sspecifiy in the config.yaml file `assembler: unicycler`, you can run this assembler as alternative.
    - `fix_contigs`: Fixes formatting issues in SPAdes contigs by trimming headers and ensuring compatibility with subsequent tools.
    - `quast`: Uses [QUAST](http://quast.sourceforge.net/quast) to assess the quality of the genome assembly by providing various metrics and visualizations.
 
-3. **Genome Annotation**
+3. **Genome Annotation and Orthology Prediction**
    - `prokka`: Uses [Prokka](https://github.com/tseemann/prokka) to annotate the assembled contigs with gene functions, identifying coding sequences, rRNAs, tRNAs, and other genomic features.
+   -  `eggnog-mapper`: Uses [eggNOG-mapper](http://eggnog-mapper.embl.de/) to perform fast functional annotation of the assembled contigs by mapping them to orthologous groups.
+   - `KEGGaNOG`: Integrates [KEGG](https://www.genome.jp/kegg/) pathways with eggNOG annotations to provide insights into the biochemical pathways present in the genomes.
 
-4. **Spa Typing**
-   - `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs, which is useful for characterizing Staphylococcus aureus strains.
-
-5. **Genome Content Analysis**
-   - `copy_to_temp`: Copies GFF annotation files to a temporary directory for further analysis.
-   - `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
-   - `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment, providing insights into the evolutionary relationships among the genomes.
-
-6. **Copy Reference**
-   - `copy_reference_genome`: Copies reference genome files to a temporary directory for use in downstream analyses.
-   - `copy_first_sample_gbk`: Copies the first sample’s Prokka GBK file to use as a reference in genome comparisons.
-
-7. **SNP Detection**
+4. **Copy Files and Reference**
+   - `copy_to_temp`: Copies prokka generated .faa and gff and fived_contigs.fasta files to temporary directories for use in downstream analyses.
+   - `copy_reference`: Checks if reference was provided, otherwise opies the first sample’s prokka .gbk file to use as a reference.
+     
+5. **SNP Detection**
    - `snippy`: Uses [Snippy](https://github.com/tseemann/snippy) to detect single nucleotide polymorphisms (SNPs) in each sample relative to the reference genome.
    - `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis.
+   - `tree`: generates a tree out of the core SNP alignment.
+   - `vcf_viewer`: Generates a heatmap of SNP between the samples.
 
-8. **Eggnog-mapper Orthology Prediction**
-   - `eggnog-mapper`: Uses [eggNOG-mapper](http://eggnog-mapper.embl.de/) to perform fast functional annotation of the assembled contigs by mapping them to orthologous groups.
-   - `KEGGaNOG`: Integrates [KEGG](https://www.genome.jp/kegg/) pathways with eggNOG annotations to provide insights into the biochemical pathways present in the genomes.
+6. **Pangenome Analysis**
+   - `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
+   - `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment, providing insights into the evolutionary relationships among the genomes.
+   - `anvio`: Perfome a anvio's pangenomic analysis [Anvi](https://anvio.org) and create a ringplot.
+  
+7. **AMR/virulence genes screening**
+   - `abricate_heatmap`: 
+   
+8. **Typing**
+   - `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs, which is useful for characterizing Staphylococcus aureus strains.
 
 
 ## Directory Structure
 ```
-├── config
-│   └── config.yaml
+├── config                  
+│   └── config.yaml         # Config file for parameters & paths         
 ├── input
-│   ├── adapters
-│   ├── genomes
-│   └── reference
-├── output
-└── workflow
+│   ├── adapters            # Adapter sequences for trimming
+│   ├── genomes             # Input FASTQ files
+│   └── reference           # Reference genomes (optional)
+├── output                  # All results
+└── workflow                # Snakemake rules, envs, scripts
 ```
+
 
 ## Installation
 
 1. Clone this git repository
+   ```bash
+   git clone <repository-url>
+   ```
 2. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
+   ```bash
+   conda env create -f <environment>.yml
+   ```
+4. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the config.yaml file, something like `path/databases/eggnog-mapper-data`.
+5. Anvi: I recommend testing the installation of all the programms, but espessialy the anvio installation:
+   ```bash
+   `anvi-self-test --suite mini`
+   `anvi-self-test --suite pangenomics`
+   ```
+
 
 ## Setup
 
+1. Prepare the `config.yaml` file in the `config/` directory.
+   ```yaml
+   assembler: spades  # or unicycler
+   database_dir: /path/to/databases/
+   project_dir: /path/to/project/
+   project_name: genome_analysis
+   ```
+
+2. Place input files in the appropriate subdirectories under `input/genomes`. The files should look like this:
+   {sample_name}_R1_fastq.gz
+   {sample_name}_R2_fastq.gz
 
 ## Usage
 
 ### Running on the SIT Cluster using Slurm
 
 ```bash
-tmux
+module load anaconda3
+module load mamba
 conda activate snakemake
 cd workflow/
 snakemake -s ga_pipeline.py \
     --configfile ../config/config.yaml \
     genomes_dir=../inputs/genomes/ \
-    output_dir=../results\
+    output_dir=../output\
     --workflow-profile ./profiles/ga_pipeline/
 ```
 
@@ -84,14 +117,16 @@ cd workflow/
 snakemake -s ga_pipeline.py \
     --configfile ../config/config.yaml \
     genomes_dir=../inputs/genomes/ \
-    result_dir=results_new \
+    result_dir=output_new \
     --profile profiles/default
 ```
 
 Note: Remove the `-n` flag after verifying the dry run.
 
 
-## Pipeline Output
+### Outputs
+
+## Output files
 
 The pipeline generates the following outputs:
 

@@ -10,41 +10,41 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 The Snakemake pipeline performs the following steps:
 
 1. **Quality Control and Trimming**
-   - `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
+   	- `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
 	- `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on both raw and trimmed reads to assess read quality.
 	- `multiqc`: Aggregates all FastQC reports into a single interactive summary using [MultiQC](https://multiqc.info/).
 
 3. **Genome Assembly**
-   - `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default assembler).
-   - `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
-   - `fix_contigs`: Cleans and standardizes SPAdes output headers to ensure compatibility with downstream tools.
-   - `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
+   	- `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default assembler).
+   	- `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
+   	- `fix_contigs`: Cleans and standardizes SPAdes output headers to ensure compatibility with downstream tools.
+   	- `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
 
 5. **Genome Annotation and Functional Prediction**
-   - `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features.
-   - `eggnog-mapper`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/).
-   - `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG).
+   	- `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features.
+   	- `eggnog-mapper`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/).
+   	- `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG).
 
 7. **Copy Files and Reference**
-   - `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses.
-   - `copy_reference`: Uses a provided reference genome if available; otherwise, automatically selects the first samples .gbk file as the reference.
+  	- `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses.
+   	- `copy_reference`: Uses a provided reference genome if available; otherwise, automatically selects the first samples .gbk file as the reference.
      
 8. **Variant Calling and Visualization**
-   - `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy).
-   - `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis.
-   - `tree`: Generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org).
-   - `vcf_viewer`: Generates a heatmap to visualize variations across strains.
+   	- `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy).
+   	- `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis.
+   	- `tree`: Generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org).
+   	- `vcf_viewer`: Generates a heatmap to visualize variations across strains.
 
 9. **Pangenome Analysis**
-   - `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
-   - `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment.
-   - `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot. 
+   	- `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
+	- `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment.
+	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot. 
   
-10. **AMR/virulence genes screening**
-   - `abricate_heatmap`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) and visualizes results as a heatmap.
+11. **AMR/virulence genes screening**
+	- `abricate_heatmap`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) and visualizes results as a heatmap.
    
-11. **Typing**
-   - `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
+13. **Typing**
+	- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
 
 
 ## Directory Structure

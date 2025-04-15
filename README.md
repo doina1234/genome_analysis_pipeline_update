@@ -63,6 +63,13 @@ The Snakemake pipeline performs the following steps:
 │       └── refg.gbk              # Reference genomes (optional)      
 ├── output                        # All results
 └── workflow                      # Snakemake rules, envs, scripts
+    ├── envs
+    ├── log
+    ├── profiles
+    │   ├── default
+    │   └── ga_pipeline
+    ├── rules
+    └── scripts
 ```
 
 

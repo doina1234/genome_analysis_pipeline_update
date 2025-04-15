@@ -23,7 +23,7 @@ The Snakemake pipeline performs the following steps:
 5. **Genome Annotation and Functional Prediction**
    - `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features.
    - `eggnog-mapper`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/).
-   - `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG]([https://www.genome.jp/kegg/](https://github.com/iliapopov17/KEGGaNOG).
+   - `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG).
 
 7. **Copy Files and Reference**
    - `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses.

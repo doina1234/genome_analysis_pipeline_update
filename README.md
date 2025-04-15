@@ -83,7 +83,7 @@ The Snakemake pipeline performs the following steps:
    ```bash
    conda env create -f workflow/envs/<environment>.yml
    ```
-4. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the config.yaml file, something like `path/databases/eggnog-mapper-data`.
+4. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
 5. Anvi: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
    ```bash
    conda activate anvio-8
@@ -104,8 +104,8 @@ The Snakemake pipeline performs the following steps:
    ```
 
 2. Place input files in the appropriate subdirectories under `input/raw_reads`. The files should look like this:
-   {sample_name}_R1_fastq.gz
-   {sample_name}_R2_fastq.gz
+   `{sample_name}_R1_fastq.gz`
+   `{sample_name}_R2_fastq.gz`
 
 
 ## Usage

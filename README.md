@@ -1,7 +1,7 @@
 # Genome Analysis Pipeline Update
 By Sara Schütz
 
-This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, annotation, variant calling (SNP detection), pangenome analysis, and typing (e.g., spa typing), along with antimicrobial resistance (AMR) and virulence gene screening.
+This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, functional annotation, variant calling (SNP detection), pangenome analysis, and typing (e.g., spa typing, cgMLST), along with antimicrobial resistance (AMR) and virulence gene screening.
 
 Given paired-end FASTQ files, the pipeline produces annotated assemblies, comparative genome content analysis, SNP reports across strains, and multiple visualizations including trees and heatmaps.
 
@@ -10,20 +10,19 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 The Snakemake pipeline performs the following steps:
 
 1. **Quality Control and Trimming**
-   - `fastqc_raw`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on raw sequencing reads to assess the quality of the reads by providing summary statistics and visualizations.
-   - `fastp`: Uses [FastP](https://github.com/OpenGene/fastp)to remove low-quality bases and adapter sequences from raw reads to improve downstream analysis.
-   - `fastqc_trimmed`: Runs FastQC again on the trimmed reads to verify the quality improvements made by Trimmomatic.
-   - `multiqc`: Uses [MultiQC](https://multiqc.info/) to aggregate multiple FastQC reports into a single, comprehensive summary report.
+   - `fastp`: Uses [fastp](https://github.com/OpenGene/fastp) to remove low-quality bases and adapter sequences from raw reads to improve downstream analysis.
+   - `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on raw sequencing and trimmed reads.
+   - `multiqc`: Uses [MultiQC](https://multiqc.info/) to aggregate multiple FastQC reports into summary report.
 
 2. **Genome Assembly**
    - `spades`: Runs [SPAdes](http://cab.spbu.ru/software/spades/) to assemble the processed reads into contiguous sequences (contigs) (default).
-   - `unicycler`: if you sspecifiy in the config.yaml file `assembler: unicycler`, you can run this assembler as alternative.
+   - `unicycler`: If you sspecifiy in the config.yaml file `assembler: unicycler`, you can run [Unicycler](https://github.com/rrwick/Unicycler) as alternative.
    - `fix_contigs`: Fixes formatting issues in SPAdes contigs by trimming headers and ensuring compatibility with subsequent tools.
-   - `quast`: Uses [QUAST](http://quast.sourceforge.net/quast) to assess the quality of the genome assembly by providing various metrics and visualizations.
+   - `quast`: Uses [QUAST](http://quast.sourceforge.net/quast) to assess the quality of the genome assembly.
 
 3. **Genome Annotation and Orthology Prediction**
    - `prokka`: Uses [Prokka](https://github.com/tseemann/prokka) to annotate the assembled contigs with gene functions, identifying coding sequences, rRNAs, tRNAs, and other genomic features.
-   -  `eggnog-mapper`: Uses [eggNOG-mapper](http://eggnog-mapper.embl.de/) to perform fast functional annotation of the assembled contigs by mapping them to orthologous groups.
+   - `eggnog-mapper`: Uses [eggNOG-mapper](http://eggnog-mapper.embl.de/) to perform fast functional annotation of the assembled contigs by mapping them to orthologous groups.
    - `KEGGaNOG`: Integrates [KEGG](https://www.genome.jp/kegg/) pathways with eggNOG annotations to provide insights into the biochemical pathways present in the genomes.
 
 4. **Copy Files and Reference**
@@ -93,6 +92,7 @@ The Snakemake pipeline performs the following steps:
    {sample_name}_R1_fastq.gz
    {sample_name}_R2_fastq.gz
 
+
 ## Usage
 
 ### Running on the SIT Cluster using Slurm
@@ -102,10 +102,7 @@ module load anaconda3
 module load mamba
 conda activate snakemake
 cd workflow/
-snakemake -s ga_pipeline.py \
-    --configfile ../config/config.yaml \
-    genomes_dir=../inputs/genomes/ \
-    output_dir=../output\
+snakemake -s Snakefile.py \
     --workflow-profile ./profiles/ga_pipeline/
 ```
 
@@ -114,10 +111,7 @@ snakemake -s ga_pipeline.py \
 ```bash
 conda activate snakemake
 cd workflow/
-snakemake -s ga_pipeline.py \
-    --configfile ../config/config.yaml \
-    genomes_dir=../inputs/genomes/ \
-    result_dir=output_new \
+snakemake -s Snakefile.py \
     --profile profiles/default
 ```
 

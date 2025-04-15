@@ -10,53 +10,59 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 The Snakemake pipeline performs the following steps:
 
 1. **Quality Control and Trimming**
-   - `fastp`: Uses [fastp](https://github.com/OpenGene/fastp) to remove low-quality bases and adapter sequences from raw reads to improve downstream analysis.
-   - `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on raw sequencing and trimmed reads.
-   - `multiqc`: Uses [MultiQC](https://multiqc.info/) to aggregate multiple FastQC reports into summary report.
+   - `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
+	- `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on both raw and trimmed reads to assess read quality.
+	- `multiqc`: Aggregates all FastQC reports into a single interactive summary using [MultiQC](https://multiqc.info/).
 
-2. **Genome Assembly**
-   - `spades`: Runs [SPAdes](http://cab.spbu.ru/software/spades/) to assemble the processed reads into contiguous sequences (contigs) (default).
-   - `unicycler`: If you sspecifiy in the config.yaml file `assembler: unicycler`, you can run [Unicycler](https://github.com/rrwick/Unicycler) as alternative.
-   - `fix_contigs`: Fixes formatting issues in SPAdes contigs by trimming headers and ensuring compatibility with subsequent tools.
-   - `quast`: Uses [QUAST](http://quast.sourceforge.net/quast) to assess the quality of the genome assembly.
+3. **Genome Assembly**
+   - `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default assembler).
+   - `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
+   - `fix_contigs`: Cleans and standardizes SPAdes output headers to ensure compatibility with downstream tools.
+   - `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
 
-3. **Genome Annotation and Orthology Prediction**
-   - `prokka`: Uses [Prokka](https://github.com/tseemann/prokka) to annotate the assembled contigs with gene functions, identifying coding sequences, rRNAs, tRNAs, and other genomic features.
-   - `eggnog-mapper`: Uses [eggNOG-mapper](http://eggnog-mapper.embl.de/) to perform fast functional annotation of the assembled contigs by mapping them to orthologous groups.
-   - `KEGGaNOG`: Integrates [KEGG](https://www.genome.jp/kegg/) pathways with eggNOG annotations to provide insights into the biochemical pathways present in the genomes.
+5. **Genome Annotation and Functional Prediction**
+   - `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features.
+   - `eggnog-mapper`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/).
+   - `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG]([https://www.genome.jp/kegg/](https://github.com/iliapopov17/KEGGaNOG).
 
-4. **Copy Files and Reference**
-   - `copy_to_temp`: Copies prokka generated .faa and gff and fived_contigs.fasta files to temporary directories for use in downstream analyses.
-   - `copy_reference`: Checks if reference was provided, otherwise opies the first sample’s prokka .gbk file to use as a reference.
+7. **Copy Files and Reference**
+   - `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses.
+   - `copy_reference`: Uses a provided reference genome if available; otherwise, automatically selects the first samples .gbk file as the reference.
      
-5. **SNP Detection**
-   - `snippy`: Uses [Snippy](https://github.com/tseemann/snippy) to detect single nucleotide polymorphisms (SNPs) in each sample relative to the reference genome.
+8. **Variant Calling and Visualization**
+   - `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy).
    - `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis.
-   - `tree`: generates a tree out of the core SNP alignment.
-   - `vcf_viewer`: Generates a heatmap of SNP between the samples.
+   - `tree`: Generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org).
+   - `vcf_viewer`: Generates a heatmap to visualize variations across strains.
 
-6. **Pangenome Analysis**
+9. **Pangenome Analysis**
    - `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
-   - `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment, providing insights into the evolutionary relationships among the genomes.
-   - `anvio`: Perfome a anvio's pangenomic analysis [Anvi](https://anvio.org) and create a ringplot.
+   - `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment.
+   - `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot. 
   
-7. **AMR/virulence genes screening**
-   - `abricate_heatmap`: 
+10. **AMR/virulence genes screening**
+   - `abricate_heatmap`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) and visualizes results as a heatmap.
    
-8. **Typing**
-   - `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs, which is useful for characterizing Staphylococcus aureus strains.
+11. **Typing**
+   - `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
 
 
 ## Directory Structure
 ```
-├── config                  
-│   └── config.yaml         # Config file for parameters & paths         
-├── input
-│   ├── adapters            # Adapter sequences for trimming
-│   ├── genomes             # Input FASTQ files
-│   └── reference           # Reference genomes (optional)
-├── output                  # All results
-└── workflow                # Snakemake rules, envs, scripts
+├── config
+│   └── config.yaml               # Config file for parameters & paths  
+├── inputs
+│   ├── adapters
+│   │   └── adapters.fa           # Adapter sequences for trimming
+│   ├── raw_reads                 # Input FASTQ files
+│   │   ├── C22_R1.fastq.gz
+│   │   ├── C22_R2.fastq.gz
+│   │   ├── C24_R1.fastq.gz
+│   │   └── C24_R2.fastq.gz
+│   └── reference
+│       └── refg.gbk              # Reference genomes (optional)      
+├── output                        # All results
+└── workflow                      # Snakemake rules, envs, scripts
 ```
 
 
@@ -88,7 +94,7 @@ The Snakemake pipeline performs the following steps:
    project_name: genome_analysis
    ```
 
-2. Place input files in the appropriate subdirectories under `input/genomes`. The files should look like this:
+2. Place input files in the appropriate subdirectories under `input/raw_reads`. The files should look like this:
    {sample_name}_R1_fastq.gz
    {sample_name}_R2_fastq.gz
 

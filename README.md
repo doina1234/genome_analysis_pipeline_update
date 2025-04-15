@@ -1,14 +1,14 @@
 # Genome analysis pipeline update
-By Judith Bergadà Pijuan
+By Sara Schütz
 
-This Snakemake pipeline is aimed to perform the assembly and annotation of paired-end sequencing reads, as well as to compare the genome content of the given DNA sequences. In addition, it performs a variant calling analysis in order to detect the SNPs across sequences, and it also determines the spa type. Given multiple paired-end sequencing reads (FASTQ files), it provides a table file showing the genome content comparison, and (multiple) tables showing the SNPs detected across strains. Outputs have the same format as given by software Roary and Snippy. The pipeline also provides the de novo assembly of the sequencing reads and their annotation.
+This Snakemake pipeline is aimed to perform the assembly and annotation of paired-end sequencing reads, as well as to compare the genome content of the given DNA sequences. In addition, it performs a variant calling analysis in order to detect the SNPs across sequences, and it also determines the spa type. Given multiple paired-end sequencing reads (FASTQ files), it provides a table file showing the genome content comparison, and (multiple) tables showing the SNPs detected across strains. Outputs have the same format as given by software descirped below. The pipeline also provides the de novo assembly of the sequencing reads and their annotation.
 
 ## Overview
 The Snakemake pipeline performs the following steps:
 
 1. **Quality Control and Trimming**
    - `fastqc_raw`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on raw sequencing reads to assess the quality of the reads by providing summary statistics and visualizations.
-   - `trimmomatic`: Uses [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) to remove low-quality bases and adapter sequences from raw reads to improve downstream analysis.
+   - `fastp`: Uses [FastP](https://github.com/OpenGene/fastp)to remove low-quality bases and adapter sequences from raw reads to improve downstream analysis.
    - `fastqc_trimmed`: Runs FastQC again on the trimmed reads to verify the quality improvements made by Trimmomatic.
    - `multiqc`: Uses [MultiQC](https://multiqc.info/) to aggregate multiple FastQC reports into a single, comprehensive summary report.
 

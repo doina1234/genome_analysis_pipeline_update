@@ -6,43 +6,42 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 
 
 ## Overview
-The Snakemake pipeline performs the following steps by default:
+The Snakemake pipeline performs the following steps (by default/optional):
 
-1. **Quality Control and Trimming**
+1. **Quality Control and Trimming (default)**
    	- `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
 	- `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on both raw and trimmed reads to assess read quality.
 	- `multiqc`: Aggregates all FastQC reports into a single interactive summary using [MultiQC](https://multiqc.info/).
 
-3. **Genome Assembly**
+3. **Genome Assembly (default)**
    	- `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default assembler).
    	- `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
    	- `fix_contigs`: Cleans and standardizes SPAdes output headers to ensure compatibility with downstream tools.
    	- `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
 
 5. **Genome Annotation and Functional Prediction**
-   	- `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features.
-   	- `eggnog-mapper`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/).
-   	- `KEGGaNOG`: Integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG).
+   	- `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features (default).
+   	- `emapper_kegganog`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/) and integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG) (optional).
 
-7. **Copy Files and Reference**
-  	- `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses.
-   	- `copy_reference`: Uses a provided reference genome if available; otherwise, automatically selects the first samples .gbk file as the reference.
+7. **Copy Files and Reference (default)**
+  	- `copy_to_temp`: Copies prokka generated .faa and gff and fixed_contigs.fasta files to temporary directories for use in downstream analyses (default).
+   	- `copy_reference`: Uses a provided reference genome if available; otherwise, automatically selects the first samples .gbk file as the reference (default).
      
-8. **Variant Calling and Visualization**
+8. **Variant Calling and Visualization (optional)**
    	- `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy).
    	- `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis.
    	- `tree`: Generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org).
    	- `vcf_viewer`: Generates a heatmap to visualize variations across strains.
 
 9. **Pangenome Analysis**
-   	- `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes.
-	- `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment.
-	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot. 
+   	- `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes (default).
+	- `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment (default).
+	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot (optional). 
   
-11. **AMR/virulence genes screening**
+11. **AMR/virulence genes screening (optional)**
 	- `abricate_heatmap`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) and visualizes results as a heatmap.
    
-13. **Typing**
+13. **Typing (optional)**
 	- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
 
 
@@ -84,7 +83,7 @@ The Snakemake pipeline performs the following steps by default:
    conda env create -f workflow/envs/<environment>.yml
    ```
 4. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
-5. Anvi: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
+5. Anvi’o: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
    ```bash
    conda activate anvio-8
    anvi-self-test --suite mini

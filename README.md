@@ -132,15 +132,15 @@ snakemake -s Snakefile.py \
 Note: Remove the `-n` flag after verifying the dry run.
 
 
-### Outputs
+## Outputs
 
-## Output files
+### Output files
 
 The pipeline generates the following outputs:
 
-### Some solutions
+## Some solutions
 
-## Add additional genomes to the analysis (for example NCBI downloads)
+### Add additional genomes to the analysis (for example NCBI downloads)
 - Download genome into project folder.
 - Unzip folder:
 ```

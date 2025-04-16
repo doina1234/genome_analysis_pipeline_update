@@ -36,7 +36,7 @@ The Snakemake pipeline performs the following steps (by default/optional):
 9. **Pangenome Analysis**
    	- `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes (default).
 	- `fasttree`: Uses [FastTree](http://www.microbesonline.org/fasttree/) to build a phylogenetic tree from PIRATE’s core alignment (default).
-	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis [Anvi](https://anvio.org) and creates a ringplot (optional). 
+	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis and creates a ringplot (optional). 
   
 11. **AMR/virulence genes screening (optional)**
 	- `abricate_heatmap`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) and visualizes results as a heatmap.

@@ -1,5 +1,4 @@
 # Genome Analysis Pipeline Update
-By Sara Schütz
 
 This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, functional annotation, variant calling (SNP detection), pangenome analysis, and typing (e.g., spa typing, cgMLST), along with antimicrobial resistance (AMR) and virulence gene screening.
 
@@ -7,7 +6,7 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 
 
 ## Overview
-The Snakemake pipeline performs the following steps:
+The Snakemake pipeline performs the following steps by default:
 
 1. **Quality Control and Trimming**
    	- `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
@@ -54,13 +53,14 @@ The Snakemake pipeline performs the following steps:
 ├── inputs
 │   ├── adapters
 │   │   └── adapters.fa           # Adapter sequences for trimming
+│   ├── genomes			  # External genomes (See some solutions section)    
 │   ├── raw_reads                 # Input FASTQ files
 │   │   ├── C22_R1.fastq.gz
 │   │   ├── C22_R2.fastq.gz
 │   │   ├── C24_R1.fastq.gz
 │   │   └── C24_R2.fastq.gz
 │   └── reference
-│       └── refg.gbk              # Reference genomes (optional)      
+│       └── refg.gbk              # Reference genomes (optional)   
 ├── output                        # All results
 └── workflow                      # Snakemake rules, envs, scripts
     ├── envs
@@ -139,3 +139,11 @@ Note: Remove the `-n` flag after verifying the dry run.
 
 The pipeline generates the following outputs:
 
+### Some solutions
+
+## Add additional genomes to the analysis (for example NCBI downloads)
+- Download genome into project folder.
+- Unzip folder:
+```
+unzip ncbi-dataset.zip
+```

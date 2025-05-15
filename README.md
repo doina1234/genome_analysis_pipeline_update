@@ -43,6 +43,7 @@ The Snakemake pipeline performs the following steps (by default/optional):
    
 13. **Typing (optional)**
 	- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
+ 	- `mlst`: Uses [mlst]([https://github.com/tseemann/mlst)]) to determine the MLST types from the assembled contigs.
 
 
 ## Directory Structure
@@ -59,7 +60,7 @@ The Snakemake pipeline performs the following steps (by default/optional):
 │   │   ├── C24_R1.fastq.gz
 │   │   └── C24_R2.fastq.gz
 │   └── reference
-│       └── refg.gbk              # Reference genomes (optional)   
+│       └── refg.fasta            # Reference genome (optional)   
 ├── output                        # All results
 └── workflow                      # Snakemake rules, envs, scripts
     ├── envs
@@ -96,6 +97,8 @@ The Snakemake pipeline performs the following steps (by default/optional):
 
 1. Prepare the `config.yaml` file in the `config/` directory.
    ```yaml
+   samples = ["{sample_name}", ...]
+
    assembler: spades  # or unicycler
    database_dir: /path/to/databases/
    project_dir: /path/to/project/

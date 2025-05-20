@@ -97,7 +97,9 @@ The Snakemake pipeline performs the following steps (by default/optional):
 
 1. Prepare the `config.yaml` file in the `config/` directory.
    ```yaml
-   samples = ["{sample_name}", ...]
+   samples:
+   	- C22
+   	- C24
 
    assembler: spades  # or unicycler
    database_dir: /path/to/databases/

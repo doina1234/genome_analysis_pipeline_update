@@ -1,0 +1,33 @@
+########################################
+## Configurations                     ##
+########################################
+# Define samples:
+samples:
+  - C22
+  - C24
+ 
+# Define additional rules to execute:
+run:
+  emapper_kegganog: true        # if you want to run eggnog-mapper and KEGG annotation
+  snippy: true                  # if you want to run snippy
+  snippy_vcf_heatmap: false     # option: true if you want to generate a heatmap from snippy-core vcf file -->if you have a lot of snps, it is better to set it to false
+  anvio: false                  # if you want to run anvio 
+
+# Define the directories:
+output_dir:  ../output/
+working_dir: ../inputs/  
+database_dir: /shares/kouyos.virology.uzh/sara/database/
+project_dir: /shares/kouyos.virology.uzh/sara/projects/genome_analysis_pipeline_update_git/
+project_name: "d.pigrum"
+
+# Define assembler (default spades, other options:unicycler)
+assembler: spades
+
+# Define fastp andapers and read quality trimming values
+refs:
+  adapters: ../inputs/adapters/adapters.fa
+fastp:
+  phread_quality: 30 # Phred+33 score (> 15 for Proton Ion, > 30 or more for Illumina)
+  cut_window_size: 4
+  cut_mean_quality: 20
+  length_required: 50 

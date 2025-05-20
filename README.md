@@ -136,6 +136,109 @@ Note: Remove the `-n` flag after verifying the dry run.
 
 
 ## Outputs
+```
+├── config
+│   └── config.yaml
+├── inputs
+│   ├── adapters
+│   │   └── adapters.fa
+│   ├── genomes
+│   │   ├── GCA_003263915.2.fasta
+│   │   └── GCA_017655645.1.fasta
+│   ├── raw_reads
+│   │   ├── C22_R1.fastq.gz
+│   │   ├── C22_R2.fastq.gz
+│   │   ├── C24_R1.fastq.gz
+│   │   └── C24_R2.fastq.gz
+│   └── reference
+├── ncbi_dataset
+│   └── data
+├── output
+│   ├── C22
+│   │   ├── annotation
+│   │   │   ├── emapper
+│   │   │   └── prokka
+│   │   └── assembly
+│   │       ├── contigs.fasta
+│   │       ├── contigs_fixed.fasta
+│   │       └── spades
+│   ├── C24
+│   ├── GCA_003263915.2
+│   ├── GCA_017655645.1
+│   ├── amr
+│   ├── kegganog
+│   ├── pangenome
+│   │   └── pirate
+│   ├── qc
+│   │   ├── fastp
+│   │   ├── fastqc
+│   │   ├── multiqc
+│   │   └── quast
+│   ├── temp_genome_annotaions
+│   ├── temp_genome_annotaions_gff
+│   ├── temp_genome_faa
+│   ├── temp_genome_fasta
+│   ├── temp_genome_gff
+│   ├── temp_genome_vcf
+│   ├── typing
+│   │   ├── mlst
+│   │   └── spaTyper
+│   └── variant_calling
+│       ├── snippy
+│       └── snippy-core
+└── workflow
+    ├── Snakefile.py
+    ├── envs
+    │   ├── abricate_env.yml
+    │   ├── anvio-8_env.yml
+    │   ├── eggnog-mapper_env.yml
+    │   ├── fastani_env.yml
+    │   ├── fastqc_env.yml
+    │   ├── fasttree_env.yml
+    │   ├── iqtree_env.yml
+    │   ├── multiqc_env.yml
+    │   ├── pirate_env.yml
+    │   ├── prokka_env.yml
+    │   ├── quast_env.yml
+    │   ├── seqkit_env.yml
+    │   ├── snakemake.yml
+    │   ├── snippy_env.yml
+    │   ├── spades_env.yaml
+    │   ├── spatyper_env.yml
+    │   └── trimmomatic_env.yml
+    ├── profiles
+    │   ├── default
+    │   │   └── config.yaml
+    │   └── ga_pipeline
+    │       └── config.v8+.yaml
+    ├── rules
+    │   ├── abricate.smk
+    │   ├── anvio.smk
+    │   ├── copy_emapper_to_temp.smk
+    │   ├── copy_ncbi_data.smk
+    │   ├── copy_prokka_to_temp.smk
+    │   ├── copy_reference.smk
+    │   ├── emapper_kegganog.smk
+    │   ├── fastp.smk
+    │   ├── fastqc.smk
+    │   ├── fix_contigs.smk
+    │   ├── mlst.smk
+    │   ├── multiqc.smk
+    │   ├── pirate.smk
+    │   ├── prokka.smk
+    │   ├── quast.smk
+    │   ├── refg_prokka.smk
+    │   ├── snippy.smk
+    │   ├── snp_pyseer.smk
+    │   ├── spaTyper.smk
+    │   ├── spades.smk
+    │   ├── test
+    │   └── unicycler.smk
+    ├── scripts
+        ├── summarize_abricate.py
+        └── vcf2heatmap.R
+  
+```
 
 ### Output files
 

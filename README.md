@@ -260,7 +260,7 @@ unzip ncbi-dataset.zip
 - Display data:
 ```
 conda activate anvio-8
-anvi-display-pan -g db/anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
+anvi-display-pan -g anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
 ```
 -->make your ringplot preatty on the anvio server...
 

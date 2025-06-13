@@ -254,3 +254,13 @@ The pipeline generates the following outputs:
 ```
 unzip ncbi-dataset.zip
 ```
+### Display anvios ringplot on your local computer
+- Install anvio environement on your local computer.
+- Download ../output/03_pangenome/anvio/anvio_Pangenome-PAN.db and ../output/03_pangenome/anvio/anvio_storage-GENOMES.db files.
+- Display data:
+```
+conda activate anvio-8
+anvi-display-pan -g db/anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
+```
+-->make your ringplot preatty on the anvio server...
+

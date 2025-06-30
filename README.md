@@ -137,6 +137,7 @@ Note: Remove the `-n` flag after verifying the dry run.
 
 The pipeline generates the following outputs:
 (tree) saschuet@u20-login-1:/shares/kouyos.virology.uzh/sara/projects/genome_analysis_pipeline_update_git_new/output$ tree -L 2
+```
 .
 ├── 01_qc
 │   ├── fastp
@@ -174,6 +175,8 @@ The pipeline generates the following outputs:
 ├── C24
 ├── C28
 └── C32
+```
+
 ## Some solutions
 
 ### Add additional genomes to the analysis (for example NCBI downloads)

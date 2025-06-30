@@ -178,12 +178,6 @@ The pipeline generates the following outputs:
 
 ## Some solutions
 
-### Add additional genomes to the analysis (for example NCBI downloads)
-- Download genome into project folder.
-- Unzip folder:
-```
-unzip ncbi-dataset.zip
-```
 ### Display anvios ringplot on your local computer
 - Install anvio environement on your local computer.
 - Download ../output/03_pangenome/anvio/anvio_Pangenome-PAN.db and ../output/03_pangenome/anvio/anvio_storage-GENOMES.db files.
@@ -195,6 +189,6 @@ anvi-display-pan -g anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
 -->make your ringplot pretty on the anvio server...
 
 ### Download cgmlst alleles
-- Download alleles as fasta from into `path/databases/{data_source_speciesname}/alleles/`
+- Download alleles as fasta from into `path/databases/{data_source_speciesname}/alleles/`, add in `config.yaml --> cgmlst: true` before running pipeline.
 	- cgmlst.org
 	- chewbbaca.online

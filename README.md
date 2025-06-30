@@ -8,36 +8,36 @@ Given paired-end FASTQ files, the pipeline produces annotated assemblies, compar
 ## Overview
 The Snakemake pipeline performs the following steps (by default/optional):
 
-**Quality Control and Trimming (default)**
+**- Quality Control and Trimming (default)**
    	- `fastp`: Performs quality filtering and adapter trimming on raw sequencing reads using [fastp](https://github.com/OpenGene/fastp).
 	- `fastqc`: Runs [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on both raw and trimmed reads to assess read quality.
 	- `multiqc`: Aggregates all FastQC reports into a single interactive summary using [MultiQC](https://multiqc.info/).
 
-**Genome Assembly (default)**
+**- Genome Assembly (default)**
    	- `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default).
    	- `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
    	- `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
 
-**Genome Annotation and Functional Prediction**
+**- Genome Annotation and Functional Prediction**
    	- `prokka`:  Annotates assembled contigs with [Prokka](https://github.com/tseemann/prokka), identifying genes, rRNAs, tRNAs, and other features (default).
    	- `bakta`: Annotates assembled contigs with [Bakta](https://github.com/oschwengers/bakta) if specified in config.yaml (annotator: bakta).
    	- `emapper_kegganog`: Maps predicted proteins to orthologous groups and functional categories using [eggNOG-mapper](http://eggnog-mapper.embl.de/) and integrates KEGG pathway data with eggNOG annotations to provide insights into metabolic and functional pathways using [KEGGaNOG](https://github.com/iliapopov17/KEGGaNOG) (optional).
    	  
-**Pangenome Analysis**
+**- Pangenome Analysis**
    	- `pirate`: Runs [PIRATE](https://github.com/SionBayliss/PIRATE) for pangenome analysis, identifying core and accessory genes across multiple genomes (default).
 	- `iqtree`: Generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org) (default)
 	- `snp-dists`: Calculates pairwise nucleotide differences from the core gene-by-gene alignment using [snp-dists](https://github.com/tseemann/snp-dists) (default).
 	- `anvio`: Runs [Anvi’o](https://anvio.org) pangenomic analysis and creates databases for a ringplot (optional) (-->see some solutions). 
   
-**Variant Calling and Visualization**
+**- Variant Calling and Visualization**
    	- `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy) (default).
    	- `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis, generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org) (default).
    	- `vcf_viewer`: Generates a heatmap to visualize variations across strains (optional) --> difficult to execute if there are too many snps, but you could filter them first?.
   
-**AMR/virulence genes screening (optional)**
+**- AMR/virulence genes screening (optional)**
 	- `abricate`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) blasting against the virulence factor database [VFDB](http://www.mgc.ac.cn/VFs/), [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047), [CARD](https://card.mcmaster.ca), [Resfinder](https://cge.cbs.dtu.dk/services/ResFinder) and [PlasmidFinder](https://cge.cbs.dtu.dk/services/PlasmidFinder). Results from each database are summarized individually to be visualized as a heatmap.
    
-**Typing (optional)**
+**- Typing (optional)**
 	- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
  	- `mlst`: Uses [mlst]([https://github.com/tseemann/mlst)]) to determine the MLST types from the assembled contigs.
   	- `chewbacca`: Uses [chewBBACA](https://github.com/B-UMMI/chewBBACA) to determine the cgMLST of the assembled contigs--> see soem solutions (optional).

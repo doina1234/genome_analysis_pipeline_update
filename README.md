@@ -11,7 +11,7 @@ The Snakemake pipeline performs the following steps (by default/optional):
 	- `multiqc`: Aggregates all FastQC reports into a single interactive summary using [MultiQC](https://multiqc.info/).
 
 **- Genome Assembly (default)**
-   	- `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) (default).
+   	- `spades`: Assembles trimmed reads into contigs using [SPAdes](http://cab.spbu.ru/software/spades/) and contigs <= 200 bp are filtered out (default).
    	- `unicycler`: Alternatively, runs [Unicycler](https://github.com/rrwick/Unicycler) if specified in config.yaml (assembler: unicycler).
    	- `quast`: Evaluates assembly quality using [QUAST](http://quast.sourceforge.net/quast).
 

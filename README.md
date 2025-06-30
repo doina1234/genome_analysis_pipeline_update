@@ -32,6 +32,7 @@ The Snakemake pipeline performs the following steps (by default/optional):
 **- Variant Calling and Visualization**
    	- `snippy`: Detects single nucleotide polymorphisms (SNPs) relative to the reference genome using [Snippy](https://github.com/tseemann/snippy) (default).
    	- `snippy-core`: Combines the SNPs from multiple samples to create a core SNP alignment for phylogenetic analysis, generates a tree out of the core SNP alignment using [IQ-TREE](http://www.iqtree.org) (default).
+    	- `snp-dists`: Calculates pairwise SNP differences from the core SNP alignment using [snp-dists](https://github.com/tseemann/snp-dists) (default).
    	- `vcf_viewer`: Generates a heatmap to visualize variations across strains (optional) --> difficult to execute if there are too many snps, but you could filter them first?.
   
 **- AMR/virulence genes screening (optional)**

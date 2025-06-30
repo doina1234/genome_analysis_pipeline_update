@@ -32,12 +32,12 @@ The Snakemake pipeline performs the following steps (by default/optional):
 - `snp-dists`: Calculates pairwise SNP differences from the core SNP alignment using [snp-dists](https://github.com/tseemann/snp-dists) (default).
 - `vcf_viewer`: Generates a heatmap to visualize variations across strains (optional) --> difficult to execute if there are too many snps, but you could filter them first?.
   
-**AMR/virulence genes screening (optional)**
-- `abricate`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) blasting against the virulence factor database [VFDB](http://www.mgc.ac.cn/VFs/), [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047), [CARD](https://card.mcmaster.ca), [Resfinder](https://cge.cbs.dtu.dk/services/ResFinder) and [PlasmidFinder](https://cge.cbs.dtu.dk/services/PlasmidFinder). Results from each database are summarized individually to be visualized as a heatmap.
+**AMR/virulence genes screening**
+- `abricate`: Screens genomes for antimicrobial resistance and virulence genes using [ABRicate](https://github.com/tseemann/abricate) blasting against the virulence factor database [VFDB](http://www.mgc.ac.cn/VFs/), [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047), [CARD](https://card.mcmaster.ca), [Resfinder](https://cge.cbs.dtu.dk/services/ResFinder) and [PlasmidFinder](https://cge.cbs.dtu.dk/services/PlasmidFinder). Results from each database are summarized individually to be visualized as a heatmap (default).
    
-**Typing (optional)**
-- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains.
-- `mlst`: Uses [mlst]([https://github.com/tseemann/mlst)]) to determine the MLST types from the assembled contigs.
+**Typing**
+- `spa_typing`: Uses [spaTyper](https://github.com/medvir/spaTyper) to determine spa types from the assembled contigs for characterizing Staphylococcus aureus strains (default).
+- `mlst`: Uses [mlst]([https://github.com/tseemann/mlst)]) to determine the MLST types from the assembled contigs (default).
 - `chewbacca`: Uses [chewBBACA](https://github.com/B-UMMI/chewBBACA) to determine the cgMLST of the assembled contigs--> see soem solutions (optional).
 
 

@@ -131,11 +131,10 @@ snakemake -s Snakefile.py --profile profiles/default
 
 Note: Remove the `-n` flag after verifying the dry run.
 
+## Output
 
-### Outputs
-
+### Directory
 The pipeline generates the following outputs:
-(tree) saschuet@u20-login-1:/shares/kouyos.virology.uzh/sara/projects/genome_analysis_pipeline_update_git_new/output$ tree -L 2
 ```
 .
 ├── 01_qc

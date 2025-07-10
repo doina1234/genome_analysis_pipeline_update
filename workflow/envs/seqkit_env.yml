@@ -1,9 +1,0 @@
-name: seqkit_env
-channels:
-  - pytorch
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - seqkit                    2.10.0               h9ee0642_0    bioconda
-prefix: /home/saschuet/data/saschuet/conda/envs/seqkit_env

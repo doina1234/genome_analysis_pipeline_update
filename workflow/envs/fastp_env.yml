@@ -1,0 +1,18 @@
+name: fastp_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - pytorch
+dependencies:
+- _libgcc_mutex=0.1=conda_forge=conda-forge
+- _openmp_mutex=4.5=2_gnu=conda-forge
+- fastp=0.22.0=h2e03b76_0=bioconda
+- libgcc=14.2.0=h767d61c_2=conda-forge
+- libgcc-ng=14.2.0=h69a702a_2=conda-forge
+- libgomp=14.2.0=h767d61c_2=conda-forge
+- libstdcxx=14.2.0=h8f9b012_2=conda-forge
+- libstdcxx-ng=14.2.0=h4852527_2=conda-forge
+- libzlib=1.2.13=h4ab18f5_6=conda-forge
+- zlib=1.2.13=h4ab18f5_6=conda-forge
+prefix: /home/saschuet/data/saschuet/conda/envs/fastp_env

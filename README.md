@@ -93,14 +93,50 @@ The Snakemake pipeline performs the following steps (by default/optional):
 
 1. Prepare the `config.yaml` file in the `config/` directory.
    ```yaml
-   samples:
-   - C22
-   - C24
+########################################
+## Configurations                     ##
+########################################
 
-   assembler: spades  # or unicycler
-   database_dir: /path/to/databases/
-   project_dir: /path/to/project/
-   project_name: genome_analysis
+# Define samples:
+samples:
+  - {sample}
+genomes:
+  - {genome}
+refg: 
+  - {reference}
+
+# Define additional rules to execute:
+run:
+  emapper_kegganog: false       # if you want to run eggnog-mapper and KEGG annotation
+  snippy: true                  # if you want to run snippy
+  snippy_vcf_heatmap: false     # option: true if you want to generate a heatmap from snippy-core vcf file
+  gwas: false                   # if you want to run GWAS analysis 
+  anvio: false                  # if you want to run anvio 
+  cgmlst: false                 # if you want to run cgmlst analysis
+
+# Define the directories:
+output_dir: ../output/
+working_dir: ../inputs/  
+database_dir: /path_to/database/
+project_dir: /path_to/projects/{project_name}/
+project_name: {project_name}
+cgmlst_schema: /path_to/database/{cgmlst_allele_folder}
+
+# Define annotator (default prokka, other options: bakta)
+annotator: prokka
+
+# Define assembler (default spades, other options: unicycler)
+assembler: spades
+
+# Define parameters for specific tools: 
+refs:
+  adapters: ../inputs/adapters/adapters.fa
+
+fastp:
+  phread_quality: 20      # Phred+33 score
+  cut_window_size: 4      # 4bp sliding window
+  cut_mean_quality: 15    # Trim when window average < 20
+  length_required: 36     # Discard reads shorter than 50 bp
    ```
 
 2. Place input files in the appropriate subdirectories under `input/raw_reads`. The files should look like this:

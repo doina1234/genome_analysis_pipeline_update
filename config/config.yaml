@@ -1,33 +1,45 @@
 ########################################
 ## Configurations                     ##
 ########################################
+
 # Define samples:
 samples:
-  - C22
-  - C24
- 
+  - sample
+genomes: []
+
+
+refg: 
+  - reference
+
 # Define additional rules to execute:
 run:
-  emapper_kegganog: true        # if you want to run eggnog-mapper and KEGG annotation
+  emapper_kegganog: false       # if you want to run eggnog-mapper and KEGG annotation
   snippy: true                  # if you want to run snippy
-  snippy_vcf_heatmap: false     # option: true if you want to generate a heatmap from snippy-core vcf file -->if you have a lot of snps, it is better to set it to false
+  snippy_vcf_heatmap: false     # option: true if you want to generate a heatmap from snippy-core vcf file
+  gwas: false                   # if you want to run GWAS analysis 
   anvio: false                  # if you want to run anvio 
+  cgmlst: false                 # if you want to run cgmlst analysis
 
 # Define the directories:
-output_dir:  ../output/
+output_dir: ../output/
 working_dir: ../inputs/  
-database_dir: /shares/kouyos.virology.uzh/sara/database/
-project_dir: /shares/kouyos.virology.uzh/sara/projects/genome_analysis_pipeline_update_git/
-project_name: "d.pigrum"
+database_dir: /path_to/database/
+project_dir: /path_to/projects/{project_name}/
+project_name: {project_name}
+cgmlst_schema: /path_to/database/{cgmlst_allele_folder}
 
-# Define assembler (default spades, other options:unicycler)
+# Define annotator (default prokka, other options: bakta)
+annotator: prokka
+
+# Define assembler (default spades, other options: unicycler)
 assembler: spades
 
-# Define fastp andapers and read quality trimming values
+# Define parameters for specific tools: 
 refs:
   adapters: ../inputs/adapters/adapters.fa
+
 fastp:
-  phread_quality: 30 # Phred+33 score (> 15 for Proton Ion, > 30 or more for Illumina)
-  cut_window_size: 4
-  cut_mean_quality: 20
-  length_required: 50 
+  phread_quality: 20      # Phred+33 score
+  cut_window_size: 4      # 4bp sliding window
+  cut_mean_quality: 15    # Trim when window average < 20
+  length_required: 36     # Discard reads shorter than 50 bp

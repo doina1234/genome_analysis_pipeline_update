@@ -4,12 +4,11 @@
 
 # Define samples:
 samples:
-  - sample
-genomes: []
-
-
+  - {sample}
+genomes:
+  - {genome}
 refg: 
-  - reference
+  - {reference}
 
 # Define additional rules to execute:
 run:

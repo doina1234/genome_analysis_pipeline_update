@@ -1,6 +1,6 @@
 # Genome Analysis Pipeline Update
 
-This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, functional annotation, variant calling (SNP detection), pangenome analysis, and typing (e.g., spa typing, MLST, cgMLST), along with antimicrobial resistance (AMR) and virulence gene screening.
+This Snakemake-based pipeline automates the analysis of paired-end sequencing data for microbial genomes. It performs genome assembly, functional annotation, variant calling, pangenome analysis, and typing (e.g., spa typing, MLST, cgMLST), along with antimicrobial resistance (AMR) and virulence gene screening.
 
 ## Overview
 The Snakemake pipeline performs the following steps (by default/optional):

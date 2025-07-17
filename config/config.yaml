@@ -18,6 +18,11 @@ run:
   gwas: false                   # if you want to run GWAS analysis 
   anvio: false                  # if you want to run anvio 
   cgmlst: false                 # if you want to run cgmlst analysis
+  filter_genes_of_interest: false  # if you want to filter genes of interest
+
+# Define the gene of interest:
+genes_of_interest:
+  - {gene}
 
 # Define the directories:
 output_dir: ../output/

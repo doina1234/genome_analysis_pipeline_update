@@ -40,6 +40,10 @@ The Snakemake pipeline performs the following steps (by default/optional):
 - `mlst`: Uses [mlst]([https://github.com/tseemann/mlst)]) to determine the MLST types from the assembled contigs (default).
 - `chewbacca`: Uses [chewBBACA](https://github.com/B-UMMI/chewBBACA) to determine the cgMLST of the assembled contigs--> see soem solutions (optional).
 
+**Filtering for genes of interest (optional)**
+- `pirate_genes_of_interest`: Extracts the genes specified in the config file (genes_of_interest) from the PIRATE output and generates a presence/absence table across all sample.
+- `snp_genes_of_interest`: Searches for all SNPs within the genes specified in the config file and creates a presence/absence matrix of these SNP positions across all samples.
+Note: Only SNPs located in annotated genes are considered.
 
 ## Directory Structure
 ```
@@ -231,10 +235,12 @@ The pipeline generates the following outputs:
 │   └── summary_qc.tsv
 ├── 02_kegganog
 ├── 03_pangenome
-│   └──  pirate
+│   ├── pirate
+│   └── genes_of_interest_presence_absence.tsv
 ├── 04_variant_calling
 │   ├── snippy
-│   └── snippy-core
+│   ├── snippy-core
+│   └── genes_of_interest_snp_matrix.tsv
 ├── 05_gwas
 ├── 06_typing
 │   ├── chewbacca

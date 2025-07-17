@@ -189,7 +189,7 @@ PHYLO_DIST                      = [OUTPUT_DIR + "05_gwas/phylogeny_dists.tsv"]
 
 
 # Mapping
-BAM                             = expand(OUTPUT_DIR + "{all_genomes}/mapping/{all_genomes}.sorted.bam", all_genomes=ALL_GENOMES)
+BAM                             = expand(OUTPUT_DIR + "{sample}/mapping/{sample}.sorted.bam", sample=SAMPLES)
 
 # Filter genes of interests
 PIRATE_GENE_TABLE               = [OUTPUT_DIR + "03_pangenome/genes_of_interest_presence_absence.tsv"]

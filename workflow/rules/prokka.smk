@@ -10,6 +10,7 @@ rule prokka:
         faa                 = OUTPUT_DIR + "{all_genomes}/annotation/prokka/prokka.faa",
         gbk                 = OUTPUT_DIR + "{all_genomes}/annotation/prokka/prokka.gbk",
         txt                 = OUTPUT_DIR + "{all_genomes}/annotation/prokka/prokka.txt",
+        fna                 = OUTPUT_DIR + "{all_genomes}/annotation/prokka/prokka.fna",
         output_dir          = directory(OUTPUT_DIR + "{all_genomes}/annotation/prokka/")
     params:
         output_dir          = OUTPUT_DIR + "{all_genomes}/annotation/prokka/"

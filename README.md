@@ -106,18 +106,18 @@ Note: Only SNPs located in annotated genes are considered.
      - {sample}
    genomes:
      - {genome}
-   refg: 
+   refg: 				# if you provide a reference genome (optional, put the .fasta file into the ../inputs/genomes/ folder 					# and write here the sample_name (eg - C22)
      - {reference}
    
    # Define additional rules to execute:
    run:
-     emapper_kegganog: false       # if you want to run eggnog-mapper and KEGG annotation
-     snippy: true                  # if you want to run snippy
-     snippy_vcf_heatmap: false     # option: true if you want to generate a heatmap from snippy-core vcf file
-     gwas: false                   # if you want to run GWAS analysis 
-     anvio: false                  # if you want to run anvio 
-     cgmlst: false                 # if you want to run cgmlst analysis
-     filter_genes_of_interest: false  # if you want to filter genes of interest
+     emapper_kegganog: false       	# if you want to run eggnog-mapper and KEGG annotation
+     snippy: true                  	# if you want to run snippy
+     snippy_vcf_heatmap: false     	# option: true if you want to generate a heatmap from snippy-core vcf file
+     gwas: false                   	# if you want to run GWAS analysis 
+     anvio: false                  	# if you want to run anvio 
+     cgmlst: false                 	# if you want to run cgmlst analysis
+     filter_genes_of_interest: false  	# if you want to filter genes of interest
 
    # Define the gene of interest:
    genes_of_interest:

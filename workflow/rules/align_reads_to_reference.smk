@@ -8,8 +8,7 @@ rule align_reads_to_reference:
         bam             = OUTPUT_DIR + "{sample}/mapping/{sample}.sorted.bam",
         bai             = OUTPUT_DIR + "{sample}/mapping/{sample}.sorted.bam.bai"
     params:
-        output_dir      = OUTPUT_DIR + "{sample}/mapping/",
-        index_prefix    = OUTPUT_DIR + "08_temp/temp_fasta/KPL1818"
+        output_dir      = OUTPUT_DIR + "{sample}/mapping/"
     conda:
         "mapping_env"  
     shell:

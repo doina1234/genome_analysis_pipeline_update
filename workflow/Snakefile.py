@@ -18,6 +18,7 @@ snakemake -s Snakefile.py --profile profiles/default -n
 import pandas as pd
 import glob
 import os
+import yaml
 
 ########################################
 ## Configuration                      ##
@@ -112,6 +113,9 @@ include: "rules/gwas.smk"
 # Mapping
 include: "rules/align_reads_to_reference.smk"
 
+# Filter genes of interest
+include: "rules/genes_of_interest.smk"
+
 ########################################
 ## Desired outputs                    ##
 ########################################
@@ -172,6 +176,7 @@ VC_REFG_GBK                     = [WORKING_DIR + "reference/refg.gbk"]
 VC_SNIPPY                       = expand(OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/snps.vcf", all_genomes=ALL_GENOMES)
 VC_COPY_VCF                     = expand(OUTPUT_DIR + "08_temp/temp_vcf/{all_genomes}.snps.vcf", all_genomes=ALL_GENOMES)
 VC_COPY_VCF_GZ                  = expand(OUTPUT_DIR + "08_temp/temp_vcf_gz/{all_genomes}.snps.vcf.gz", all_genomes=ALL_GENOMES) 
+VC_COPY_TAB                     = expand(OUTPUT_DIR + "08_temp/temp_tab/{all_genomes}.snps.tab", all_genomes=ALL_GENOMES)
 VC_SNIPPY_CORE                  = [OUTPUT_DIR + "04_variant_calling/snippy-core/core.full.aln"]
 VC_CORE_TREE                    = [OUTPUT_DIR + "04_variant_calling/snippy-core/iqtree.log"]
 VC_VCF_HEATMAP                  = [OUTPUT_DIR + "04_variant_calling/vcf_viewer/heatmap_output.html"]
@@ -185,6 +190,10 @@ PHYLO_DIST                      = [OUTPUT_DIR + "05_gwas/phylogeny_dists.tsv"]
 
 # Mapping
 BAM                             = expand(OUTPUT_DIR + "{all_genomes}/mapping/{all_genomes}.sorted.bam", all_genomes=ALL_GENOMES)
+
+# Filter genes of interests
+PIRATE_GENE_TABLE               = [OUTPUT_DIR + "03_pangenome/genes_of_interest_presence_absence.tsv"]
+SNP_GENES_OF_INTEREST           = [OUTPUT_DIR + "04_variant_calling/genes_of_interest_snp_matrix.tsv"]
 
 ########################################
 ## Pipeline                           ##
@@ -228,6 +237,7 @@ rule all:
         *(VC_SNIPPY if config["run"].get("snippy") else []),
         *(VC_COPY_VCF if config["run"].get("snippy") else []), 
         *(VC_COPY_VCF_GZ if config["run"].get("snippy") else []),
+        *(VC_COPY_TAB if config["run"].get("snippy") else []), 
         *(VC_SNIPPY_CORE if config["run"].get("snippy") else []),
         *(VC_CORE_TREE if config["run"].get("snippy") else []),
         *(VC_VCF_HEATMAP if config["run"].get("snippy_vcf_heatmap") else []),
@@ -237,5 +247,8 @@ rule all:
         *(VCF_MERGED if config["run"].get("gwas") else []),
         *(PHYLO_DIST if config["run"].get("gwas") else []),
         BAM,
+        ### Optional outputs depending on config pirate_genes_of_interest = true
+        *(PIRATE_GENE_TABLE if config["run"].get("filter_genes_of_interest") else []),
+        *(SNP_GENES_OF_INTEREST if config["run"].get("filter_genes_of_interest") else []),
     message:
         "The genome analysis pipeline finished successfully!"

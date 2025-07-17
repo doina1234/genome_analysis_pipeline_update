@@ -8,7 +8,8 @@ rule snippy:
         refg                = rules.refg_gbk.output.gbk
     output:
         snippy_output       = OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/snps.vcf",
-        snippy_output_gz    = OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/snps.vcf.gz"
+        snippy_output_gz    = OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/snps.vcf.gz",
+        snippy_tab          = OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/snps.tab",
     params:
         output_dir          = OUTPUT_DIR + "04_variant_calling/snippy/{all_genomes}/"
     conda: "snippy_env"
@@ -25,21 +26,26 @@ rule snippy:
 rule copy_snippy_to_temp:
     input:
         vcf                     = rules.snippy.output.snippy_output,
-        vcf_gz                  = rules.snippy.output.snippy_output_gz
+        vcf_gz                  = rules.snippy.output.snippy_output_gz,
+        tab                     = rules.snippy.output.snippy_tab
     output:
         temp_vcf                = OUTPUT_DIR + "08_temp/temp_vcf/{all_genomes}.snps.vcf",
-        temp_vcf_gz             = OUTPUT_DIR + "08_temp/temp_vcf_gz/{all_genomes}.snps.vcf.gz"
+        temp_vcf_gz             = OUTPUT_DIR + "08_temp/temp_vcf_gz/{all_genomes}.snps.vcf.gz",
+        temp_tab                = OUTPUT_DIR + "08_temp/temp_tab/{all_genomes}.snps.tab"
     params:
         output_dir_vcf          = OUTPUT_DIR + "08_temp/temp_vcf/",
-        output_dir_vcf_gz       = OUTPUT_DIR + "08_temp/temp_vcf_gz/"
+        output_dir_vcf_gz       = OUTPUT_DIR + "08_temp/temp_vcf_gz/",
+        output_dir_tab          = OUTPUT_DIR + "08_temp/temp_tab/"
     message:
         "Copying snippy vcf files to temp folder"
     shell:
         "mkdir -p {params.output_dir_vcf}; "
         "mkdir -p {params.output_dir_vcf_gz}; "
+        "mkdir -p {params.output_dir_tab}; "
         "echo {input.vcf}; "
         "cp {input.vcf} {output.temp_vcf}; "
         "cp {input.vcf_gz} {output.temp_vcf_gz}; "
+        "cp {input.tab} {output.temp_tab}; "
 
 
 

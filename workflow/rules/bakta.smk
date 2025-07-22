@@ -22,7 +22,7 @@ rule bakta:
         "bakta  "
         "--output {params.output_dir} "
         "--prefix bakta "
-        "--db {params.bakta_db}
+        "--db {params.bakta_db} "
         "--threads {resources.cpus_per_task} "
         "{input.fixed_contigs} "
         "--verbose "

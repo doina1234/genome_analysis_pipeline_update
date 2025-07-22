@@ -78,7 +78,12 @@ Note: Only SNPs located in annotated genes are considered.
    ```bash
    git clone <https://github.com/doina1234/genome_analysis_pipeline_update/tree/main>
    ```
-2. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
+   or
+   Download docker image
+   ```bash
+   docker pull
+   ```
+3. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
    ```bash
    conda env create -f workflow/envs/<environment>.yml
    ```

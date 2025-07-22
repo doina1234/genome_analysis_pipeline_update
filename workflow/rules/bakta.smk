@@ -6,9 +6,9 @@ rule bakta:
     input:
         fixed_contigs = OUTPUT_DIR + "08_temp/temp_fasta/{all_genomes}.fasta"
     output:
-        gff           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/{all_genomes}.gff3",
-        faa           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/{all_genomes}.faa",
-        gbk           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/{all_genomes}.gbff"
+        gff           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/bakta.gff3",
+        faa           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/bakta.faa",
+        gbk           = OUTPUT_DIR + "{all_genomes}/annotation/bakta/bakta.gbff"
     params:
         output_dir    = OUTPUT_DIR + "{all_genomes}/annotation/bakta/",
         bakta_db      = DATABASE_DIR + "bakta_db_full/"

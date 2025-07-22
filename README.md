@@ -282,7 +282,7 @@ The pipeline generates the following outputs:
 conda activate anvio-8
 anvi-display-pan -g anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
 ```
--->make your ringplot pretty on the anvio server...
+-->make your ringplot pretty on the anvio server... (this could help: https://merenlab.org/2016/11/08/pangenomics-v2/)
 
 ### Download cgmlst alleles
 - Download alleles as fasta from into `path/databases/{data_source_speciesname}/alleles/`, add in `config.yaml --> cgmlst: true` before running pipeline.

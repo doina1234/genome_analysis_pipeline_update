@@ -5,7 +5,7 @@ rule simplify_fasta_headers:
     output:
         simplified          = OUTPUT_DIR + "08_temp/temp_fasta/{all_genomes}.simplified.fasta"
     conda:
-        "base"  # or a specific environment if needed
+        "base_env"  # or a specific environment if needed
     shell:
         "awk '/^>/ {{print $1}} !/^>/ {{print}}' {input.fasta} > {output.simplified}; "
 

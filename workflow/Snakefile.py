@@ -129,10 +129,8 @@ QC_QUAST                        = expand(OUTPUT_DIR + "01_qc/quast/{sample}/repo
 # Copy external genomes
 COPY_EXTERNAL_GENOMES           = expand(OUTPUT_DIR + "08_temp/temp_fasta/{genome}.fasta", genome=GENOMES)
 
-# Annotation PROKKA
-ANNOTATION_PROKKA               = expand(OUTPUT_DIR + "{all_genomes}/annotation/prokka/", all_genomes=ALL_GENOMES)
-ANNOTATION_PROKKA_COPY_GFF      = expand(OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff", all_genomes=ALL_GENOMES)
-ANNOTATION_PROKKA_COPY_TXT      = expand(OUTPUT_DIR + "{all_genomes}/annotation/prokka/prokka.txt", all_genomes=ALL_GENOMES)
+# Annotation 
+ANNOTATION_COPY_GFF      = expand(OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff", all_genomes=ALL_GENOMES)
 
 # QC summary 
 QC_SUMMARY                      = [OUTPUT_DIR + "01_qc/summary_qc.tsv"] 
@@ -204,9 +202,8 @@ rule all:
         #QC_MULTIQC,
         ASSEMBLY_CONTIGS,
         QC_QUAST,
-        COPY_EXTERNAL_GENOMES, 
-        ANNOTATION_PROKKA,
-        ANNOTATION_PROKKA_COPY_GFF, 
+        COPY_EXTERNAL_GENOMES,
+        ANNOTATION_COPY_GFF, 
         ##### Optional steps depending on config emapper_kegganog = true
         *(ANNOTATION_EMAPPER if config["run"].get("emapper_kegganog") else []),
         *(ANNOTATION_COPY_DEC_GFF if config["run"].get("emapper_kegganog") else []), 

@@ -29,7 +29,7 @@ rule spa_typing:
     message:
         "Compute Spa Type Calculation"
     conda: 
-        "spaTyper_env"
+        "spatyper_env"
     shell:
         "mkdir -p {params.output_dir}; "
         "spaTyper "

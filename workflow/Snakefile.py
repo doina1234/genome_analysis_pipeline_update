@@ -24,7 +24,7 @@ import yaml
 ## Configuration                      ##
 ########################################
 
-configfile: "/config/config.yaml" 
+configfile: "../config/config.yaml" 
 
 WORKING_DIR         = config["working_dir"]
 OUTPUT_DIR          = config["output_dir"]

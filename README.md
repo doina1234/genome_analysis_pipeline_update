@@ -80,7 +80,7 @@ Note: Only SNPs located in annotated genes are considered.
    ```
    or download docker image
    ```bash
-   docker pull
+   docker pull 
    ```
 3. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
    ```bash

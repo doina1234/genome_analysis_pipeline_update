@@ -76,7 +76,7 @@ Note: Only SNPs located in annotated genes are considered.
 
 1. Clone this git repository
    ```bash
-   git clone <https://github.com/doina1234/genome_analysis_pipeline_update/tree/main>
+   git clone https://github.com/doina1234/genome_analysis_pipeline_update/tree/main
    ```
    or download docker image
    ```bash

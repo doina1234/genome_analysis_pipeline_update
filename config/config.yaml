@@ -4,11 +4,11 @@
 
 # Define samples:
 samples:
-  - {sample}
-genomes:
-  - {genome}
+  - sample
+genomes:                        # add [] if you want to add additional genomes to analyse
+  - genome
 refg: 
-  - {reference}
+  - reference
 
 # Define additional rules to execute:
 run:
@@ -28,9 +28,9 @@ genes_of_interest:
 output_dir: output/
 working_dir: inputs/  
 database_dir: /path_to/database/
-project_dir: /path_to/projects/{project_name}/
-project_name: {project_name}
-cgmlst_schema: /path_to/database/{cgmlst_allele_folder}
+project_dir: /path_to/project_name
+project_name: project_name
+cgmlst_schema: /path_to/database/cgmlst_allele_folder
 
 # Define annotator (default prokka, other options: bakta)
 annotator: prokka
@@ -40,7 +40,7 @@ assembler: spades
 
 # Define parameters for specific tools: 
 refs:
-  adapters: ../inputs/adapters/adapters.fa
+  adapters: inputs/adapters/adapters.fa
 
 fastp:
   phread_quality: 20      # Phred+33 score

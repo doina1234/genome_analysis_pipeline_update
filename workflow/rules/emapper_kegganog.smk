@@ -67,7 +67,7 @@ rule kegganog:
     input:
         annotation_list         = rules.create_annotation_list.output.annotation_list
     output:
-        kegganog_figure         = OUTPUT_DIR + "02_kegganog/figure_kegganog.png"
+        kegganog_figure         = OUTPUT_DIR + "02_kegganog/heatmap_figure.png"
     params:
         output_dir              = OUTPUT_DIR + "02_kegganog/"
     conda:

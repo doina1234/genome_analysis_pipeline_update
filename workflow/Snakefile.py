@@ -47,7 +47,7 @@ GENOMES         = config["genomes"]
 
 ALL_GENOMES     = sorted(set(SAMPLES + GENOMES))
 
-# Wähle erstes als Referenz
+# Reference
 REF_SAMPLE      = config["refg"][0]
 
 GWAS_GENOMES = [g for g in ALL_GENOMES if g != REF_SAMPLE]
@@ -199,7 +199,6 @@ SNP_GENES_OF_INTEREST           = [OUTPUT_DIR + "04_variant_calling/genes_of_int
 
 rule all:
     input:
-        #QC_MULTIQC,
         ASSEMBLY_CONTIGS,
         QC_QUAST,
         COPY_EXTERNAL_GENOMES,

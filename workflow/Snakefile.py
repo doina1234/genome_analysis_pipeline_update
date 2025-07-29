@@ -7,8 +7,8 @@
 ########################################
 
 '''
-snakemake -s Snakefile.py --workflow-profile profiles/ga_pipeline/  -n
-snakemake -s Snakefile.py --profile profiles/default -n
+snakemake -s workflow/Snakefile.py --workflow-profile profiles/ga_pipeline/  -n
+snakemake -s workflow/Snakefile.py --profile profiles/default -n
 '''
 
 ########################################
@@ -24,7 +24,7 @@ import yaml
 ## Configuration                      ##
 ########################################
 
-configfile: "../config/config.yaml" 
+configfile: "config/config.yaml" 
 
 WORKING_DIR         = config["working_dir"]
 OUTPUT_DIR          = config["output_dir"]

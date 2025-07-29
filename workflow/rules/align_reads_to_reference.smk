@@ -1,7 +1,7 @@
 
 rule align_reads_to_reference:
     input:
-        ref           = OUTPUT_DIR + "08_temp/temp_fasta/KPL1818.fasta",
+        ref             = lambda wildcards: f"{OUTPUT_DIR}08_temp/temp_fasta/{REF_SAMPLE}.fasta",
         reads1          = rules.fastp.output.trimmed_1,
         reads2          = rules.fastp.output.trimmed_2
     output:

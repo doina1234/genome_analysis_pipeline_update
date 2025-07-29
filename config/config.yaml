@@ -25,8 +25,8 @@ genes_of_interest:
   - {gene}
 
 # Define the directories:
-output_dir: ../output/
-working_dir: ../inputs/  
+output_dir: output/
+working_dir: inputs/  
 database_dir: /path_to/database/
 project_dir: /path_to/projects/{project_name}/
 project_name: {project_name}

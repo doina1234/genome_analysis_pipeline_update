@@ -48,7 +48,7 @@ GENOMES         = config["genomes"]
 ALL_GENOMES     = sorted(set(SAMPLES + GENOMES))
 
 # Wähle erstes als Referenz
-REF_SAMPLE      = config["refg"]
+REF_SAMPLE      = config["refg"][0]
 
 GWAS_GENOMES = [g for g in ALL_GENOMES if g != REF_SAMPLE]
 

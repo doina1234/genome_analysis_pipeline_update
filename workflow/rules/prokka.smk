@@ -32,10 +32,12 @@ rule prokka:
 rule copy_prokka_to_temp:
     input:
         faa                     = rules.prokka.output.faa,
-        gff                     = rules.prokka.output.gff
+        gff                     = rules.prokka.output.gff,
+        txt                     = rules.prokka.output.txt    
     output:
         temp_faa                = OUTPUT_DIR + "08_temp/temp_faa/{all_genomes}.faa",
-        temp_gff                = OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff"
+        temp_gff                = OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff",
+        temp_txt                = OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.txt"
     params:
         output_dir_faa          = OUTPUT_DIR + "08_temp/temp_faa/",
         output_dir_gff          = OUTPUT_DIR + "08_temp/temp_gff/"
@@ -44,5 +46,7 @@ rule copy_prokka_to_temp:
     shell:
         "mkdir -p {params.output_dir_faa}; "
         "mkdir -p {params.output_dir_gff}; "
+        "mkdir -p {params.output_dir_txt}; "
         "cp {input.faa} {output.temp_faa}; "
         "cp {input.gff} {output.temp_gff}; "
+        "cp {input.txt} {output.temp_txt}; "

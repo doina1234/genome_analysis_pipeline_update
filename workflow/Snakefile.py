@@ -137,7 +137,7 @@ QC_SUMMARY                      = [OUTPUT_DIR + "01_qc/summary_qc.tsv"]
 
 # Annotation KEGGANOG/EMAPPER
 ANNOTATION_EMAPPER              = expand(OUTPUT_DIR + "{all_genomes}/annotation/emapper/", all_genomes=ALL_GENOMES)
-KEGGANOG                        = [OUTPUT_DIR + "02_kegganog/figure_kegganog.png"]
+KEGGANOG                        = [OUTPUT_DIR + "02_kegganog/heatmap_figure.png"]
 ANNOTATION_COPY_DEC_GFF         = expand(OUTPUT_DIR + "08_temp/temp_decorated_gff/{all_genomes}.emapper.decorated.gff", all_genomes=ALL_GENOMES)
 
 

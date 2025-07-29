@@ -7,8 +7,8 @@
 ########################################
 
 '''
-snakemake -s workflow/Snakefile.py --workflow-profile profiles/ga_pipeline/  -n
-snakemake -s workflow/Snakefile.py --profile profiles/default -n
+snakemake -s workflow/Snakefile.py --workflow-profile workflow/profiles/ga_pipeline/  -n
+snakemake -s workflow/Snakefile.py --profile workflow/profiles/default -n
 '''
 
 ########################################

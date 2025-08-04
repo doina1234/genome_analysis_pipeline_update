@@ -4,7 +4,7 @@ channels:
   - bioconda
   - defaults
   - nodefaults
-dependencies:
+dependencies: 
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
   - archspec=0.2.3=pyhd8ed1ab_0

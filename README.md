@@ -78,17 +78,15 @@ Note: Only SNPs located in annotated genes are considered.
    ```bash
    git clone https://github.com/doina1234/genome_analysis_pipeline_update.git
    ```
-   or download docker image
-   ```bash
-   docker pull 
-   ```
-3. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
+   
+2. If the conda environments are not installed on your computer, install using `conda env create -f <environment>.yml` command. The environment files are in `workflow/envs` directory.
    ```bash
    conda env create -f workflow/envs/<environment>.yml
    ```
-4. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
    
-5. Anvi’o: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
+3. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
+   
+4. Anvi’o: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
    ```bash
    conda activate anvio-8
    anvi-self-test --suite mini

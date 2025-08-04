@@ -6,7 +6,8 @@ rule pirate:
     input:
         gff_files           = expand(OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff", all_genomes=ALL_GENOMES)
     output:
-        alignment_fasta     = OUTPUT_DIR + "03_pangenome/pirate/core_alignment.fasta" 
+        alignment_fasta     = OUTPUT_DIR + "03_pangenome/pirate/core_alignment.fasta",
+        gene_families       = OUTPUT_DIR + "03_pangenome/pirate/PIRATE.gene_families.ordered.tsv" 
     params:
         gff_dir             = OUTPUT_DIR + "08_temp/temp_gff/",
         output_dir          = OUTPUT_DIR + "03_pangenome/pirate/"

@@ -216,16 +216,14 @@ Note: Only SNPs located in annotated genes are considered.
 module load anaconda3
 module load mamba
 conda activate snakemake
-cd workflow/
-snakemake -s Snakefile.py --workflow-profile profiles/ga_pipeline/
+snakemake -s workflow/Snakefile.py --workflow-profile workflow/profiles/ga_pipeline/
 ```
 
 ### Running Locally
 
 ```bash
 conda activate snakemake
-cd workflow/
-snakemake -s Snakefile.py --profile profiles/default
+snakemake -s workflow/Snakefile.py --workflow-profile workflow/profiles/default
 ```
 
 Note: Remove the `-n` flag after verifying the dry run.
@@ -278,9 +276,9 @@ The pipeline generates the following outputs:
 
 ## Some solutions
 
-### Display anvio ringplot on your local computer
-- Install anvio environment on your local computer.
-- Download ../output/03_pangenome/anvio/anvio_Pangenome-PAN.db and ../output/03_pangenome/anvio/anvio_storage-GENOMES.db files.
+### Display anvi'o ringplot on your local computer
+- Install anvi'o environment on your local computer.
+- Download output/03_pangenome/anvio/anvio_Pangenome-PAN.db and output/03_pangenome/anvio/anvio_storage-GENOMES.db files.
 - Display data:
 ```
 conda activate anvio-8
@@ -289,6 +287,6 @@ anvi-display-pan -g anvio_storage-GENOMES.db -p anvio_Pangenome-PAN.db
 -->make your ringplot pretty on the anvio server... (this could help: https://merenlab.org/2016/11/08/pangenomics-v2/)
 
 ### Download cgmlst alleles
-- Download alleles as fasta from into `path/databases/{data_source_speciesname}/alleles/`, add in `config.yaml --> cgmlst: true` before running pipeline.
+- Download alleles as fasta from into `path/databases/{data_source_speciesname}/alleles/`, add in `config.yaml --> cgmlst: true` before running the pipeline.
 	- cgmlst.org
 	- chewbbaca.online

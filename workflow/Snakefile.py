@@ -199,6 +199,7 @@ SNP_GENES_OF_INTEREST           = [OUTPUT_DIR + "04_variant_calling/genes_of_int
 
 rule all:
     input:
+        QC_MULTIQC,
         ASSEMBLY_CONTIGS,
         QC_QUAST,
         COPY_EXTERNAL_GENOMES,

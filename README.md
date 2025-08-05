@@ -84,9 +84,11 @@ Note: Only SNPs located in annotated genes are considered.
    conda env create -f workflow/envs/<environment>.yml
    ```
    
-3. Eggnog Database: Follow Setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend to create a databases folder and add the eggnog-mapper-data folder in there. After a succesfull download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
+3. Eggnog database: Follow setup instructions eggnog-mapper documentation (https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2.1.5-to-v2.1.12). I recommend creating a databases folder and adding the eggnog-mapper-data folder in there. After a successful download, add the path to the databases in the `config.yaml file`, something like `path/databases/eggnog-mapper-data`.
+
+4. Bakta database: If you want to use the bakta annotation tool (config.yaml: annotator: bakta), follow the bakta database setup instructions (https://github.com/oschwengers/bakta?tab=readme-ov-file#database) and add the path to the databases in the `config.yaml file`, something like `path/databases/bakta_db_full`.
    
-4. Anvi’o: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
+5. Anvi’o: It is recommended to test the installation of all required tools, but especially verifying that Anvi’o is correctly installed and functional by running its built-in test suites:
    ```bash
    conda activate anvio-8
    anvi-self-test --suite mini
@@ -169,10 +171,15 @@ Note: Only SNPs located in annotated genes are considered.
      gwas: false                   # if you want to run GWAS analysis 
      anvio: false                  # if you want to run anvio 
      cgmlst: false                 # if you want to run cgmlst analysis
+     filter_genes_of_interest: true  # if you want to filter genes of interest
+
+   # Define the gene of interest:
+   genes_of_interest:
+     - {gene}
    
    # Define the directories:
-   output_dir: ../output/
-   working_dir: ../inputs/  
+   output_dir: output/
+   working_dir: inputs/  
    database_dir: /path_to/database/
    project_dir: /path_to/projects/{project_name}/
    project_name: {project_name}
@@ -186,7 +193,7 @@ Note: Only SNPs located in annotated genes are considered.
    
    # Define parameters for specific tools: 
    refs:
-     adapters: ../inputs/adapters/adapters.fa
+     adapters: inputs/adapters/adapters.fa
    
    fastp:
      phread_quality: 20      # Phred+33 score
@@ -271,8 +278,8 @@ The pipeline generates the following outputs:
 
 ## Some solutions
 
-### Display anvios ringplot on your local computer
-- Install anvio environement on your local computer.
+### Display anvio ringplot on your local computer
+- Install anvio environment on your local computer.
 - Download ../output/03_pangenome/anvio/anvio_Pangenome-PAN.db and ../output/03_pangenome/anvio/anvio_storage-GENOMES.db files.
 - Display data:
 ```

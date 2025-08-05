@@ -33,7 +33,7 @@ rule copy_prokka_to_temp:
     input:
         faa                     = rules.prokka.output.faa,
         gff                     = rules.prokka.output.gff,
-        txt                     = rules.prokka.output.txt    
+        txt                     = rules.prokka.output.txt
     output:
         temp_faa                = OUTPUT_DIR + "08_temp/temp_faa/{all_genomes}.faa",
         temp_gff                = OUTPUT_DIR + "08_temp/temp_gff/{all_genomes}.gff",

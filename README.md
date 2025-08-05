@@ -203,10 +203,13 @@ Note: Only SNPs located in annotated genes are considered.
    ```
 
 2. Place input files in the appropriate subdirectories under `input/raw_reads`. The files should look like this:
-   `{sample_name}_R1_fastq.gz`
-   `{sample_name}_R2_fastq.gz`
+   `{sample_name}_R1.fastq.gz`
+   `{sample_name}_R2.fastq.gz`
 
-3. Set optional tool to true if you want to run it...
+3. Place already assembled genomes in the appropriate subdirectories under `input/genomes`. The files should look like this:
+   `{genome_name}.fasta`
+
+4. Set optional tool to true if you want to run it...
 
 ## Usage
 

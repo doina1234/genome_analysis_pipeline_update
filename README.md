@@ -128,8 +128,8 @@ Note: Only SNPs located in annotated genes are considered.
      - {gene}
    
    # Define the directories:
-   output_dir: ../output/
-   working_dir: ../inputs/  
+   output_dir: output/
+   working_dir: inputs/  
    database_dir: /path_to/database/
    project_dir: /path_to/projects/{project_name}/
    project_name: {project_name}
@@ -143,7 +143,7 @@ Note: Only SNPs located in annotated genes are considered.
    
    # Define parameters for specific tools: 
    refs:
-     adapters: ../inputs/adapters/adapters.fa
+     adapters: inputs/adapters/adapters.fa
    
    fastp:
      phread_quality: 20      # Phred+33 score
